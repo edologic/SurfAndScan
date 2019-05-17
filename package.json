@@ -1,6 +1,6 @@
 {
   "name": "surfandscan",
-  "version": "1.0.2",
+  "version": "1.0.8",
   "description": "Framework to use scan devices in your browser",
   "main": "index.js",
   "scripts": {

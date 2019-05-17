@@ -2,20 +2,21 @@ SurfAndScan
 ===============
 
 
-Installation
+Overview and Client
 ------------
-
-1. Install SurfAndScanClient (For Windows or MacOS)
-
-
-2. Change into clone path and install application dependencies:
-
-  `npm install surfandscan`
 
 [![Edologic Logo](https://www.edologic.de/demo/edologic.png)](https://www.edologic.de/)
 
-  Framework that allow you to use scan devices from the browser.
-  A minimalist web framework for [node](http://nodejs.org) or [vue](https://vuejs.org/).
+  SurfAndScan is a Framework that allow you to use scan devices from the browser.
+  A minimalist web framework for [node](http://nodejs.org), [vue](https://vuejs.org/) and every other javascript project.
+  The Framework handles the API from the surfAndScan Client. 
+
+Install SurfAndScanClient (For Windows or MacOS)
+
+ On Windows you need to install the [windows setup](http://www.edologic.de/demo/SurfAndScanInstaller.zip).
+ Extract the zip and double click the installer file.
+ 
+ On MacOs you need to install the dmg setup. Not available yet. Try again later.
 
   [![NPM Version][npm-image]][npm-url]
   [![NPM Downloads][downloads-image]][downloads-url]
@@ -29,14 +30,9 @@ sas.getDevices(this.onGetDevices)
 sas.scan(this.onGetScanStatus)
 sas.downloadTaskAsPDF('taskId')
 ```
-
 ## Installation
 
-This is a [Node.js](https://nodejs.org/en/) module available through the
-[npm registry](https://www.npmjs.com/).
-
-Before installing, [download and install Node.js](https://nodejs.org/en/download/).
-Node.js 0.10 or higher is required.
+This is a javascript module available through the [npm registry](https://www.npmjs.com/).
 
 Installation is done using the
 [`npm install` command](https://docs.npmjs.com/getting-started/installing-npm-packages-locally):
@@ -47,6 +43,7 @@ $ npm install surfandscan
 
 Follow [our installing guide](https://www.edologic.de/demo/sas/#/Framework)
 for more information.
+
 
 ## Features
 
@@ -87,6 +84,7 @@ The original author of ScanAndSurf is [mebel MatthiasEbel](https://github.com/me
 
   [MIT](LICENSE)
 
+[windows-download-url]: http://www.edologic.de/demo/SurfAndScanInstallerV1_90.zip
 [npm-image]: https://img.shields.io/npm/v/surfandscan.svg
 [npm-url]: https://www.npmjs.com/package/surfandscan
 [downloads-image]: https://img.shields.io/npm/dm/surfandscan.svg
