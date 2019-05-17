@@ -30,6 +30,9 @@ sas.getDevices(this.onGetDevices)
 sas.scan(this.onGetScanStatus)
 sas.downloadTaskAsPDF('taskId')
 ```
+
+## I want to test without programming
+No problem, install the surfAndScan client and open this [demo-site](https://www.edologic.de/demo/sas/#/FrameworkTest) 
 ## Installation
 
 This is a javascript module available through the [npm registry](https://www.npmjs.com/).
