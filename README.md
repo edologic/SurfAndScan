@@ -24,12 +24,120 @@ Install SurfAndScanClient (For Windows or MacOS)
   [![Mac Build][appmac-image]][downloads-url]
   [![Windows Build][appveyor-image]][downloads-url]
 
+####At first import the framework
+
 ```js
 import sas from 'surfandscan'
-sas.getDevices(this.onGetDevices)
-sas.scan(this.onGetScanStatus)
-sas.downloadTaskAsPDF('taskId')
 ```
+
+####How to get the available scan devices
+The request starts with
+```js
+var onSuccess = function(data) {
+  console.log(data);
+};
+var onError = function(xhr, status, error) {
+  console.error(xhr, status, error);
+};
+sas.getDevices(onSuccess, onError)
+```
+
+The response in onSuccess
+```js
+[
+  {
+    "id": "d_ICA_Dell C2665dnf Color MFP",
+    "name": "Dell C2665dnf Color MFP",
+    "type": "ICA"
+  }
+]]
+```
+
+####How to start the scan process
+The request starts with
+```js
+var onSuccess = function(data) {
+  console.log(data);
+};
+var onError = function(xhr, status, error) {
+  console.error(xhr, status, error);
+};
+var parameter = {
+  duplex:false,
+  feederUnit: 0,
+  deviceAddress: 'd_ICA_Dell C2665dnf Color MFP'
+}
+sas.scan(onSuccess, onError, parameter)
+```
+
+The response in onSuccess with actual scan status informations 
+```js
+{
+  "id": "task3441595979362720.992698398762",
+  "status": "starting",
+  "files": [],
+  "pageNo": 0,
+  "progress": 0,
+  "success": true,
+  "message": "",
+  "feederUnit": 0,
+  "messageCode": 0
+}
+```
+
+####How to get scan process status information
+The request starts with
+```js
+var onSuccess = function(data) {
+  console.log(data);
+};
+var onError = function(xhr, status, error) {
+  console.error(xhr, status, error);
+};
+var taskId = "task3441595979362720.992698398762"
+sas.getTaskStatus(taskId, onSuccess, onError, parameter)
+```
+
+The response in onSuccess with actual scan status information
+'status' is set to 'done' when done. 
+You get a list of file ids.
+```js
+{
+  "id": "task3441595979362720.992698398762",
+  "status": "done",
+  "files": [
+    {
+      "id": "file584650585869633184.6413714743682",
+      "name": "img_0.jpg"
+    },
+    {
+      "id": "file58465239210551744.710738804383254",
+      "name": "img_1.jpg"
+    },
+    {
+      "id": "file584654120563940876.8503452494729",
+      "name": "img_2.jpg"
+    }
+  ],
+  "pageNo": 3,
+  "progress": 0,
+  "success": true,
+  "message": "Feeder is empty",
+  "feederUnit": 0,
+  "messageCode": 0
+}
+```
+
+####How to download a scan task
+```js
+var taskId = "task3441595979362720.992698398762";
+var filePattern = ""; // empty or an fileName 
+var pageOrder = null; // or an array with reordered ids like ["file584654120563940876.8503452494729", "file58465239210551744.710738804383254", "file584650585869633184.6413714743682"]
+sas.downloadTaskAsPDF(taskId, filePattern, pageOrder)
+```
+
+####How to delete one page from scan task
+Simply user the pageOrder parameter and dismiss on id.
 
 ## I want to test without programming
 No problem, install the surfAndScan client and open this [demo-site](https://www.edologic.de/demo/sas/#/FrameworkTest) 
@@ -67,9 +175,9 @@ for more information.
 
 ## Quick Start
 
-  The quickest way to get started with ScanAndSurf is to utilize the executable [`FrameworkTest`](https://www.edologic.de/demo/sas/#/FrameworkTest):
+  The quickest way to get started with ScanAndSurf is to open the website [`FrameworkTest`](https://www.edologic.de/demo/sas/#/FrameworkTest).
 
-  Install the executable. SurfAndScanInstaller.exe
+  Install the executable. [SurfAndScanInstaller.exe](http://www.edologic.de/demo/SurfAndScanInstaller.zip)
 
 
 ## Philosophy
