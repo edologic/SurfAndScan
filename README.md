@@ -13,7 +13,7 @@ Overview and Client
 
 Install SurfAndScanClient (For Windows or MacOS)
 
- On Windows you need to install the [windows setup](http://www.edologic.de/demo/SurfAndScanInstaller.zip).
+ On Windows you need to install the [windows setup](http://www.edologic.de/demo/SurfAndScanInstallerV2_00.zip).
  Extract the zip and double click the installer file.
  
  On MacOs you need to install the dmg setup. Not available yet. Try again later.
@@ -29,6 +29,18 @@ Install SurfAndScanClient (For Windows or MacOS)
 ```js
 import sas from 'surfandscan'
 ```
+
+####How to check SurfAndScan is installed on host
+The request starts with
+```js
+var onSuccess = function(data) {
+  console.log('sas is installed');
+};
+var onError = function(xhr, status, error) {
+  console.log('sas is not running or not installed. Please download');
+};
+sas.checkIsAvailable(onSuccess, onError)
+
 
 ####How to get the available scan devices
 The request starts with
@@ -153,7 +165,7 @@ $ npm install surfandscan
 ```
 
 Follow [our installing guide](https://www.edologic.de/demo/sas/#/Framework)
-for more information.
+for more information or use the [demo-site](https://www.edologic.de/demo/sas/#/FrameworkTest)
 
 
 ## Features
@@ -177,7 +189,7 @@ for more information.
 
   The quickest way to get started with ScanAndSurf is to open the website [`FrameworkTest`](https://www.edologic.de/demo/sas/#/FrameworkTest).
 
-  Install the executable. [SurfAndScanInstaller.exe](http://www.edologic.de/demo/SurfAndScanInstaller.zip)
+  Install the executable. [SurfAndScanInstaller.exe](http://www.edologic.de/demo/SurfAndScanInstallerV2_00.zip)
 
 
 ## Philosophy
@@ -195,7 +207,7 @@ The original author of ScanAndSurf is [mebel MatthiasEbel](https://github.com/me
 
   [MIT](LICENSE)
 
-[windows-download-url]: http://www.edologic.de/demo/SurfAndScanInstallerV1_90.zip
+[windows-download-url]: http://www.edologic.de/demo/SurfAndScanInstallerV2_00.zip
 [npm-image]: https://img.shields.io/npm/v/surfandscan.svg
 [npm-url]: https://www.npmjs.com/package/surfandscan
 [downloads-image]: https://img.shields.io/npm/dm/surfandscan.svg
