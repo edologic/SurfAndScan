@@ -13,7 +13,7 @@ Overview and Client
 
 Install SurfAndScanClient (For Windows or MacOS)
 
- On Windows you need to install the [windows setup](http://www.edologic.de/demo/SurfAndScanInstallerV2_00.zip).
+ On Windows you need to install the [windows setup](http://www.edologic.de/demo/sas/SurfAndScanInstallerV2_00.zip).
  Extract the zip and double click the installer file.
  
  On MacOs you need to install the dmg setup. Not available yet. Try again later.
@@ -189,7 +189,7 @@ for more information or use the [demo-site](https://www.edologic.de/demo/sas/#/F
 
   The quickest way to get started with ScanAndSurf is to open the website [`FrameworkTest`](https://www.edologic.de/demo/sas/#/FrameworkTest).
 
-  Install the executable. [SurfAndScanInstaller.exe](http://www.edologic.de/demo/SurfAndScanInstallerV2_00.zip)
+  Install the executable. [SurfAndScanInstaller.exe](http://www.edologic.de/demo/sas/SurfAndScanInstallerV2_00.zip)
 
 
 ## Philosophy
@@ -207,7 +207,7 @@ The original author of ScanAndSurf is [mebel MatthiasEbel](https://github.com/me
 
   [MIT](LICENSE)
 
-[windows-download-url]: http://www.edologic.de/demo/SurfAndScanInstallerV2_00.zip
+[windows-download-url]: http://www.edologic.de/demo/sas/SurfAndScanInstallerV2_00.zip
 [npm-image]: https://img.shields.io/npm/v/surfandscan.svg
 [npm-url]: https://www.npmjs.com/package/surfandscan
 [downloads-image]: https://img.shields.io/npm/dm/surfandscan.svg
