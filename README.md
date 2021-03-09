@@ -194,9 +194,9 @@ for more information or use the [demo-site](https://www.edologic.de/demo/sas/#/F
 
 ## Philosophy
 
-  The ScanAndSurf philosophy is to provide small, robust tooling for HTTP servers, making
+  The ScanAndSurf philosophy is to provide small, robust tooling for HTTPS servers, making
   it a great solution for single page applications, web sites, hybrids, or public
-  HTTP APIs. It allows you to enable every http site to connect with an scan device. Twain, ICA, WIA, .. 
+  HTTP APIs. It allows you to enable every https site to connect with an scan device. Twain, ICA, WIA, .. 
 
 ## People
 
