@@ -176,7 +176,7 @@ for more information or use the [demo-site](https://www.edologic.de/demo/sas/#/F
   * Integrate To Pages Within An Hour
   * Fast Flatbed And ADF Scanning
   * Generates Thumbnails & Upload To Web Servers Directly
-  * Multiple output formats: PDF, TIFF
+  * Multiple output formats: PDF, TIFF, JPEG
 
 ## Docs & Community
 
@@ -187,14 +187,14 @@ for more information or use the [demo-site](https://www.edologic.de/demo/sas/#/F
 
 ## Quick Start
 
-  The quickest way to get started with ScanAndSurf is to open the website [`FrameworkTest`](https://www.edologic.de/demo/sas/#/FrameworkTest).
+  The quickest way to get started with SurfAndScan is to open the website [`FrameworkTest`](https://www.edologic.de/demo/sas/#/FrameworkTest).
 
   Install the executable. [SurfAndScanInstaller.exe](https://www.edologic.de/demo/sas/SurfAndScanInstallerV2_00.zip)
 
 
 ## Philosophy
 
-  The ScanAndSurf philosophy is to provide small, robust tooling for HTTPS servers, making
+  The SurfAndScan philosophy is to provide small, robust tooling for HTTPS servers, making
   it a great solution for single page applications, web sites, hybrids, or public
   HTTP APIs. It allows you to enable every https site to connect with an scan device. Twain, ICA, WIA, .. 
 

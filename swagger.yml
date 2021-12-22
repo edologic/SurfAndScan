@@ -1,0 +1,501 @@
+openapi: 3.0.1
+info:
+  description: SurfAndScan is a framework that allows you to use scan/print and other
+    devices from the browser. It helps you with https and cross origin issues.
+    Try this swagger api but before install the runtime on your windows system here.
+    (<a href="https://surfandscan.de/download/SurfAndScanInstaller.zip" target="_new">https://surfandscan.de/download/SurfAndScanInstaller.zip</a>)
+
+  title: SurfAndScan
+  version: 1.2.0
+servers:
+  - url: https://localhost.surfandscan.com:8090/api/v1
+  - url: http://localhost.surfandscan.com:8001/api/v1
+paths:
+  /version:
+    get:
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Status'
+          description: Ok
+        "417":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SASError'
+          description: Domain Errors
+      summary: Getting status of SurfAndScan driver
+      tags:
+        - Status
+      x-accepts: application/json
+  /devices/list:
+    get:
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeviceArray'
+          description: Ok
+        "417":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SASError'
+          description: Domain Errors
+      summary: Getting list of scan devices
+      tags:
+        - Devices
+      x-accepts: application/json
+  /scan:
+    get:
+      parameters:
+        - name: duplex
+          in: query
+          description: Scan in duplex mode 0 false 1 true
+          schema:
+            example: 0
+            type: integer
+            format: int
+            maximum: 1
+            minimum: 0
+        - name: feederUnit
+          in: query
+          description: Define the feed unit
+          schema:
+            example: 3
+            type: integer
+            format: int
+        - name: deviceAddress
+          in: query
+          description: Id of the scanner device
+          schema:
+            example: d_ICA_Dell_C2665dnf
+            type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ScanTask'
+          description: Ok
+        "417":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SASError'
+          description: Domain Errors
+      summary: Start scan task
+      tags:
+        - Scan
+      x-accepts: application/json
+  /scantask/status:
+    get:
+      parameters:
+        - name: taskId
+          in: query
+          description: Task id
+          schema:
+            example: task1639476547456989.9873687326531
+            type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TaskInfo'
+          description: Ok
+        "417":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SASError'
+          description: Domain Errors
+      summary: Returns the status of an running task
+      tags:
+        - Scan
+  /scantask/upload:
+    get:
+      parameters:
+        - name: taskId
+          in: query
+          description: Task id
+          schema:
+            example: task1639476547456989.9873687326531
+            type: string
+        - name: uploadTo
+          in: query
+          description: Upload target URL
+          schema:
+            example: https://localhost.surfandscan.com:8090/api/v1/demo/upload
+            type: string
+        - name: groupFiles
+          in: query
+          description: Should the files in task grouped together
+          schema:
+            example: false | true
+            type: string
+        - name: pageOrder
+          in: query
+          description: Sort order of the pages by index. Back order pages with 3,2,1,0
+          schema:
+            example: [3,2,1,0]
+            type: string
+        - name: docType
+          in: query
+          description: Export file format PDF or jpeg
+          schema:
+            example: pdf | jpg
+            type: string
+        - name: targetHeader
+          in: query
+          description: This header is send to the target URL. Base64 encoded json string '{"Authorization":"Bearer YourAuthorizationToken"}'
+          schema:
+            example: eyJBdXRob3JpemF0aW9uIjoiQmVhcmVyIFlvdXJBdXRob3JpemF0aW9uVG9rZW4ifQ==
+            type: string
+      summary: Upload a task as PDF to given target url with given Header informations.
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TaskInfo'
+          description: Ok
+        "417":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SASError'
+          description: Domain Errors
+      tags:
+        - Scan
+  /scantask/download/jpeg:
+    get:
+      parameters:
+        - name: taskId
+          in: query
+          description: Task id
+          schema:
+            example: task1639476547456989.9873687326531
+            type: string
+        - name: fileId
+          in: query
+          description: File id of the task content
+          schema:
+            example: file1639476547456989.9873687326531
+            type: string
+      responses:
+        "200":
+          content:
+            image/jpeg:
+              schema:
+                type: file
+          description: JPEG exported file
+        "417":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SASError'
+          description: Domain Errors
+      summary: Exports the tasks file id as jpeg image.
+      tags:
+        - Scan
+  /scantask/download/pdf:
+    get:
+      parameters:
+        - name: scanTaskId
+          in: query
+          description: Task id
+          schema:
+            example: task1639476547456989.9873687326531
+            type: string
+        - name: filePattern
+          in: query
+          description: Delivery filename the extension pdf is attached automatically
+          schema:
+            example: myImageName
+            type: string
+        - name: pageOrder
+          in: query
+          description: Array of order images in pdf export
+          schema:
+            example: [ 3,2,1,0 ]
+            type: string
+        - name: rotateArr
+          in: query
+          description: Array of rotate images in pdf export
+          schema:
+            example: [ 0,90,180,270 ]
+            type: string
+      responses:
+        "200":
+          content:
+            application/pdf:
+              schema:
+                type: file
+          description: PDF exported file
+        "417":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SASError'
+          description: Domain Errors
+      summary: Exports the task as PDF file.
+      tags:
+        - Scan
+  /scantask/download/tiff:
+    get:
+      parameters:
+        - name: scanTaskId
+          in: query
+          description: Task id
+          schema:
+            example: task1639476547456989.9873687326531
+            type: string
+        - name: filePattern
+          in: query
+          description: Delivery filename the extension pdf is attached automatically
+          schema:
+            example: myImageName
+            type: string
+        - name: pageOrder
+          in: query
+          description: Array of order images in pdf export
+          schema:
+            example: [ 3,2,1,0 ]
+            type: string
+        - name: rotateArr
+          in: query
+          description: Array of rotate images in pdf export
+          schema:
+            example: [ 0,90,180,270 ]
+            type: string
+      responses:
+        "200":
+          content:
+            application/pdf:
+              schema:
+                type: file
+          description: TIFF exported file
+        "417":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SASError'
+          description: Domain Errors
+      summary: Exports the task as TIFF file.
+      tags:
+        - Scan
+  /printers/list:
+    get:
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PrinterArray'
+          description: Ok
+        "417":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SASError'
+          description: Domain Errors
+      summary: Getting list of scan devices
+      tags:
+        - Devices
+      x-accepts: application/json
+  /printers/print:
+    get:
+      parameters:
+        - name: url
+          in: query
+          description: URL of the source of the file
+          schema:
+            example: https://localhost.surfandscan.com:8090/api/v1/demo/download
+            type: string
+        - name: printerId
+          in: query
+          description: ID of the printer device
+          schema:
+            example: Dell_C2665dnf
+            type: string
+
+
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PrintStatus'
+          description: Ok
+        "417":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SASError'
+          description: Domain Errors
+      summary: Print document from given url. Header content could added to request the url.
+      tags:
+        - Print
+      x-accepts: application/json
+components:
+  schemas:
+    Status:
+      example:
+        date: 2020.07.24
+        logPath: /var/folders/9n/b1lx0rqs6bs3xqxq88jnpt940000gn/T/surfAndScan23234234324
+        version: 1.0.5
+      properties:
+        version:
+          example: 1.0.5
+          type: string
+        date:
+          example: 2020.07.24
+          type: string
+        logPath:
+          example: /var/folders/9n/b1lx0rqs6bs3xqxq88jnpt940000gn/T/surfAndScan23234234324
+          type: string
+      type: object
+    Unit:
+      example:
+        unit: -1
+        feeder: "auto"
+      properties:
+        unit:
+          example: -1
+          type: string
+        feeder:
+          example: auto
+          type: string
+    Device:
+      example:
+        id: ScannerId
+        name: Name of Scanner
+        type: ICA
+        units: [{ "unit": -1, "feeder": "auto" },{"unit": 0,"feeder": "flatbed"},{"unit": 3,"feeder": "multi"}]
+      properties:
+        id:
+          example: ScannerId
+          type: string
+        name:
+          example: Name of Scanner
+          type: string
+        type:
+          example: ICA
+          type: string
+        units:
+          items:
+            $ref: '#/components/schemas/Unit'
+          type: array
+      type: array
+    DeviceArray:
+        items:
+          $ref: '#/components/schemas/Device'
+        type: array
+    Printer:
+      example:
+        name: Name of printer
+        id: PrinterId
+        attributes: {}
+      properties:
+        name:
+          example: Name of Printer
+          type: string
+        id:
+          example: PrinterId
+          type: string
+        attributes:
+          example: {}
+          type: string
+    PrinterArray:
+      items:
+        $ref: '#/components/schemas/Printer'
+      type: array
+    SASError:
+      properties:
+        code:
+          example: ERROR
+          type: string
+        message:
+          example: Missing parameter
+          type: string
+        raw:
+          example: <stack trace>
+          type: string
+      type: object
+    FileInfo:
+      properties:
+        id:
+          example: file1639479141257280.45209281875293
+          type: string
+        name:
+          example: img_task1639479126887126.26553382313088_0
+          type: string
+        success:
+          example: true
+          type: boolean
+      type: object
+    ScanTask:
+      properties:
+        id:
+          example: transfer 84%
+          type: string
+        name:
+          example: transfer 84%
+          type: string
+      type: object
+    TaskInfo:
+      properties:
+        id:
+          example: task1639476830874686.5629977758964
+          type: string
+          description: id of the task
+        status:
+          example: transfer 84%
+          type: string
+          description: status of the task 100% should be done with scan process somtimes it need 4 seconds more
+        files:
+          items:
+            $ref: '#/components/schemas/FileInfo'
+          type: array
+          description: list of scanned files
+        pageNo:
+          example: 0
+          type: integer
+          description: number of page
+        progress:
+          example: 84
+          type: integer
+          description: progress of scan process 0..100
+        success:
+          example: true
+          type: boolean
+          description: scan succeeded?
+        message:
+          example:
+          type: string
+          description: trouble message when exists
+        feederUnit:
+          example: 0
+          type: integer
+          description: the used feeder
+        messageCode:
+          example: 0
+          type: integer
+          description: code of message
+      type: object
+    PrintStatus:
+      properties:
+        success:
+          example: true
+          type: string
+          description: true or false
+        message:
+          example: Error while printing
+          type: string
+          description: Contain a error message when success is false
+x-original-swagger-version: "2.0"
+
