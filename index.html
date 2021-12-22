@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="index.css">
+    <title>SurfAndScan developer tutorial sample workflow site</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/prism.min.js" integrity="sha512-hpZ5pDCF2bRCweL5WoA0/N1elet1KYL5mx3LP555Eg/0ZguaHawxNvEjF6O3rufAChs16HVNhEc6blF/rZoowQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/plugins/autoloader/prism-autoloader.min.js" integrity="sha512-sv0slik/5O0JIPdLBCR2A3XDg/1U3WuDEheZfI/DI5n8Yqc3h5kjrnr46FGBNiUAJF7rE4LHKwQ/SoSLRKAxEA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/components/prism-json.min.js" integrity="sha512-NFh0rog24tZqD7+bvhZ15l9r10u/yir42sQ1EuUEWpw2Pyh1KrGUKKXI1TWSAX7RxaohbPn0u1fTb6+YU4u3zA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/components/prism-json5.min.js" integrity="sha512-MbfYOMnSmsdss5g+EHR4wFPGhXX5zQvQk2bVMW+y20PdSj1ir6aFrnLm3S7elwQuv9YaRoyMJFT+U5kQqyTj/Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+</head>
+<body>
+<h2>Import SurfAndScan</h2>
+<pre>
+<code class="language-javascript">
+    import sas from 'surfandscan'
+</code>
+</pre>
+
+<h2>Check SurfAndScan is available:</h2>
+<pre>
+<code class="language-javascript">
+    sas.checkIsAvailable(function (data) {
+        console.log('isAvailable', data)
+    }, function (err) {
+        console.log('sas is not available plz install https://surfandscan.de/download/SurfAndScanInstaller.zip')
+    })
+</code>
+<div class="result" id="result01"></div>
+</pre>
+<button onclick="isAvailable()">Try: Is Available</button>
+
+<h2>Get SurfAndScan scan devices:</h2>
+<pre  class="language-json">
+<code class="language-javascript">
+    sas.getDevices(function (data) {
+        showResult(targetName, true, JSON.stringify(data))
+    }, fnOnError)
+</code>
+    <code class="language-json" id="result02">
+    </code>
+</pre>
+<button onclick="getDevices()">Try: Get Scan devices</button>
+
+
+
+<h2>Start scan devices:</h2>
+<pre  class="language-json">
+<code class="language-javascript">
+    var scanParameter = {
+        duplex:false,
+        feederUnit: 0,
+        deviceAddress: 'd_ICA_Dell C2665dnf Color MFP'
+    }
+    sas.scan(function (data) {
+        showResult(targetName, true, JSON.stringify(data))
+    }, fnOnError)
+</code>
+    <code class="language-json" id="result03">
+    </code>
+</pre>
+<select name="devices" id="deviceList"></select>
+<button onclick="startScan()">Try: Start Scan on select device</button>
+
+
+
+
+<h2>Get scan Task status:</h2>
+<pre  class="language-json">
+<code class="language-javascript">
+    // currentTaskId is found in the result of start scan
+    sas.getTaskStatus(currentTaskId,function (data) {
+        showResult(targetName, true, JSON.stringify(data, null, 2))
+      }, fnOnError)
+</code>
+    <code class="language-json" id="result04">
+    </code>
+</pre>
+<button onclick="getScanTaskStatus()">Try: Get scan Task status</button>
+
+
+
+<h2>Upload Task to destination</h2>
+<pre  class="language-json">
+<code class="language-javascript">
+    var parameter = {
+        taskId: 'task.2789347898',
+        uploadTo: 'https://YourTargetDomain.com'
+        groupFiles: false
+      }
+      var headers = {
+        'Authorization': 'Bearer YourAuthorizationOrTokenForTargetSystem'
+        /*Also you could add a one time token to uploadTO URL*/
+      }
+      sas.uploadTaskToDestination(parameter, headers, function (data) {
+        showResult(targetName, true, JSON.stringify(data, null, 2))
+      }, function (err) {
+        showResult(targetName, false, err)
+      })
+</code>
+    <code class="language-json" id="result05">
+    </code>
+</pre>
+<button onclick="uploadTask()">Try: Upload Task</button>
+
+
+<script src="./dist/sas.js"></script>
+<script type="application/javascript">
+
+    function isAvailable() {
+      const targetName = 'result01'
+      sas.checkIsAvailable(function (data) {
+        showResult(targetName, true, JSON.stringify(data))
+      }, function (err) {
+        showResult(targetName, false, err)
+        showResult(targetName, false, 'sas is not available on ' + sas.getHost() + ' plz install https://surfandscan.de/download/SurfAndScanInstaller.zip')
+      })
+    }
+    function getDevices() {
+      const targetName = 'result02'
+      sas.getDevices(function (data) {
+        showResult(targetName, true, JSON.stringify(data, null, 2))
+        fillSelect(data)
+      }, function (err) {
+        showResult(targetName, false, err)
+      })
+    }
+    function getScanTaskStatus() {
+      const targetName = 'result04'
+      const cmp = this
+      sas.getTaskStatus(cmp.currentTaskId,function (data) {
+        showResult(targetName, true, JSON.stringify(data, null, 2))
+      }, function (err) {
+        showResult(targetName, false, err)
+      })
+    }
+    function uploadTask() {
+      const targetName = 'result05'
+      const cmp = this
+      var parameter = {
+        taskId: cmp.currentTaskId,
+        uploadTo: sas.getDemoUploadURL(),
+        groupFiles: false
+      }
+      var headers = {
+        'Authorization': 'Bearer YourAuthorizationToken'
+      }
+      sas.uploadTaskToDestination(parameter, headers, function (data) {
+        showResult(targetName, true, JSON.stringify(data, null, 2))
+      }, function (err) {
+        showResult(targetName, false, err)
+      })
+    }
+    function printFile() {
+      const targetName = 'result05'
+      const cmp = this
+      var parameter = {
+        taskId: cmp.currentTaskId,
+        uploadTo: sas.getDemoUploadURL(),
+        groupFiles: false
+      }
+      var headers = {
+        'Authorization': 'Bearer YourAuthorizationToken'
+      }
+      sas.uploadTaskToDestination(parameter, headers, function (data) {
+        showResult(targetName, true, JSON.stringify(data, null, 2))
+      }, function (err) {
+        showResult(targetName, false, err)
+      })
+    }
+    function getSelectedDevice() {
+      var e = document.getElementById("deviceList");
+      if (e.options[e.selectedIndex]) {
+        return e.options[e.selectedIndex].value;
+      }
+      return null
+    }
+    function startScan() {
+      const cmp = this
+      const targetName = 'result03'
+
+      var scanDeviceId = getSelectedDevice()
+      if (!scanDeviceId) {
+        alert('Please get devices before')
+      }
+
+      var scanParameter = {
+        duplex:false,
+        feederUnit: 0,
+        deviceAddress: scanDeviceId
+      }
+      sas.scan(scanParameter, function (data) {
+        cmp.currentTaskId = data.id
+        showResult(targetName, true, JSON.stringify(data, null, 2))
+      }, function (err) {
+        showResult(targetName, false, err)
+      })
+    }
+    function showResult(targetId, isSuccess, data) {
+      if (!isSuccess) {
+        document.getElementById(targetId).innerText = '\nfailed:\n' + data + document.getElementById(targetId).innerText
+      } else {
+        document.getElementById(targetId).innerHTML = '\nsuccess:\n' + data + document.getElementById(targetId).innerHTML
+      }
+    }
+    function fillSelect(langArray) {
+      var select = document.getElementById('deviceList'),
+        option,
+        i = 0,
+        il = langArray.length;
+
+      for (; i < il; i += 1) {
+        option = document.createElement('option');
+        option.setAttribute('value', langArray[i].id);
+        option.appendChild(document.createTextNode(langArray[i].name + ' ' + langArray[i].type));
+        select.appendChild(option);
+      }
+    }
+
+    sas.setHost('https://localhost.surfandscan.com:8090')
+
+</script>
+
+
+</body>
+</html>
