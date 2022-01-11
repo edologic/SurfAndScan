@@ -43,6 +43,8 @@
     "axios": "^0.24.0"
   },
   "devDependencies": {
+    "node-forge": ">=1.0.0",
+    "postcss": ">=8.2.13",
     "ansi-html-community": "0.0.8",
     "@babel/core": "7.11.6",
     "@babel/preset-env": "7.11.5",
