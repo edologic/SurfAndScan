@@ -2,14 +2,17 @@ SurfAndScan
 ===============
 
 
-Overview and Client
+Overview
 ------------
 
-[![Edologic Logo](https://www.edologic.de/demo/edologic.png)](https://www.edologic.de/)
+[![Edologic Logo](https://www.edologic.de/demo/sas/edologic.png)](https://www.edologic.de/)
 
-  SurfAndScan is a Framework that allow you to use scan devices from the browser.
-  A minimalist web framework for [node](http://nodejs.org), [vue](https://vuejs.org/) and every other javascript project.
-  The Framework handles the API from the surfAndScan Client.
+  SurfAndScan is a Framework that allow you to use scan and print devices from the browser. It offers some more features.
+
+  Like following workflow (Download Document from your cloud system / Edit local with your associated editor / Upload edited file via event polling or automatic to cloud system)
+
+  A minimalist web framework for [vue](https://vuejs.org/) or every other javascript project.
+  The Framework handles the API from the surfAndScan client driver.
   
 ### Simple test
 Simplest way to test SurfAndScan is to download and install the [SurfAndScan driver](https://www.edologic.de/demo/sas/SurfAndScanInstallerV2_01.zip) and open the swagger documentation here. 
@@ -211,7 +214,7 @@ The original author of ScanAndSurf is [mebel MatthiasEbel](https://github.com/me
 
   [MIT](LICENSE)
 
-[windows-download-url]: https://www.edologic.de/demo/sas/SurfAndScanInstallerV2_00.zip
+[windows-download-url]: https://www.edologic.de/demo/sas/SurfAndScanInstallerV2_01.zip
 [npm-image]: https://img.shields.io/npm/v/surfandscan.svg
 [npm-url]: https://www.npmjs.com/package/surfandscan
 [downloads-image]: https://img.shields.io/npm/dm/surfandscan.svg
