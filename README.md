@@ -9,9 +9,13 @@ Overview and Client
 
   SurfAndScan is a Framework that allow you to use scan devices from the browser.
   A minimalist web framework for [node](http://nodejs.org), [vue](https://vuejs.org/) and every other javascript project.
-  The Framework handles the API from the surfAndScan Client. 
+  The Framework handles the API from the surfAndScan Client.
+  
+### Simple test
+Simplest way to test SurfAndScan is to download and install the [SurfAndScan driver](https://www.edologic.de/demo/sas/SurfAndScanInstallerV2_01.zip) and open the swagger documentation here. 
+  [Try swagger documentation](https://edologic.github.io/SurfAndScan/swagger.html).
 
-Install SurfAndScanClient (For Windows or MacOS)
+### Install SurfAndScanClient (For Windows or MacOS)
 
  On Windows you need to install the [windows setup](https://www.edologic.de/demo/sas/SurfAndScanInstallerV2_00.zip).
  Extract the zip and double click the installer file.

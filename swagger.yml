@@ -74,6 +74,7 @@ paths:
           schema:
             example: d_ICA_Dell_C2665dnf
             type: string
+          required: true
       responses:
         "200":
           content:
@@ -100,6 +101,7 @@ paths:
           schema:
             example: task1639476547456989.9873687326531
             type: string
+          required: true
       responses:
         "200":
           content:
@@ -125,11 +127,19 @@ paths:
           schema:
             example: task1639476547456989.9873687326531
             type: string
+          required: true
         - name: uploadTo
           in: query
           description: Upload target URL
           schema:
             example: https://localhost.surfandscan.com:8090/api/v1/demo/upload
+            type: string
+          required: true
+        - name: targetHeader
+          in: query
+          description: This header is send to the target URL. Base64 encoded json string '{"Authorization":"Bearer YourAuthorizationToken"}'
+          schema:
+            example: eyJBdXRob3JpemF0aW9uIjoiQmVhcmVyIFlvdXJBdXRob3JpemF0aW9uVG9rZW4ifQ==
             type: string
         - name: groupFiles
           in: query
@@ -148,12 +158,6 @@ paths:
           description: Export file format PDF or jpeg
           schema:
             example: pdf | jpg
-            type: string
-        - name: targetHeader
-          in: query
-          description: This header is send to the target URL. Base64 encoded json string '{"Authorization":"Bearer YourAuthorizationToken"}'
-          schema:
-            example: eyJBdXRob3JpemF0aW9uIjoiQmVhcmVyIFlvdXJBdXRob3JpemF0aW9uVG9rZW4ifQ==
             type: string
       summary: Upload a task as PDF to given target url with given Header informations.
       responses:
@@ -180,12 +184,14 @@ paths:
           schema:
             example: task1639476547456989.9873687326531
             type: string
+          required: true
         - name: fileId
           in: query
           description: File id of the task content
           schema:
             example: file1639476547456989.9873687326531
             type: string
+          required: true
       responses:
         "200":
           content:
@@ -211,6 +217,7 @@ paths:
           schema:
             example: task1639476547456989.9873687326531
             type: string
+          required: true
         - name: filePattern
           in: query
           description: Delivery filename the extension pdf is attached automatically
@@ -245,6 +252,136 @@ paths:
       summary: Exports the task as PDF file.
       tags:
         - Scan
+  /edittask/start:
+    get:
+      parameters:
+        - name: guid
+          in: query
+          description: Document guid perhaps your internal unique id
+          schema:
+            example: myuuidofthedoc
+            type: string
+          required: true
+        - name: fileName
+          in: query
+          description: Optional a fileName
+          schema:
+            example: myTestFile.txt
+            type: string
+          required: true
+        - name: downloadFrom
+          in: query
+          description: Download URL
+          schema:
+            example: https://localhost.surfandscan.com:8090/api/v1/demo/downloadEditable
+            type: string
+          required: true
+        - name: downloadHeader
+          in: query
+          description: This header is send to the target URL. Base64 encoded json string '{"Authorization":"Bearer YourAuthorizationToken"}'
+          schema:
+            example: eyJBdXRob3JpemF0aW9uIjoiQmVhcmVyIFlvdXJBdXRob3JpemF0aW9uVG9rZW4ifQ==
+            type: string
+        - name: uploadMode
+          in: query
+          description: Define the upload mode (manual, autoupload)
+          schema:
+            example: manual
+            type: string
+        - name: uploadTo
+          in: query
+          description: (required when uploadMode is autoupload) Upload target URL
+          schema:
+            example: https://localhost.surfandscan.com:8090/api/v1/demo/upload
+            type: string
+        - name: uploadHeader
+          in: query
+          description: (optional when uploadMode is autoupload) This header is send to the target URL. Base64 encoded json string '{"Authorization":"Bearer YourAuthorizationToken"}'
+          schema:
+            example: eyJBdXRob3JpemF0aW9uIjoiQmVhcmVyIFlvdXJBdXRob3JpemF0aW9uVG9rZW4ifQ==
+            type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EditTaskStatus'
+          description: Ok
+        "417":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SASError'
+          description: Domain Errors
+      summary: Downloads a file and tries to open local in a associated file type editor
+      tags:
+        - Edit
+      x-accepts: application/json
+  /edittask/status:
+    get:
+      parameters:
+        - name: taskId
+          in: query
+          description: Task id
+          schema:
+            example: ET1641894239177
+            type: string
+          required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EditTaskStatus'
+          description: Ok
+        "417":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SASError'
+          description: Domain Errors
+      summary: Retrieve the status of a edit task
+      tags:
+        - Edit
+  /edittask/upload:
+    get:
+      parameters:
+        - name: taskId
+          in: query
+          description: Task id
+          schema:
+            example: ET1641894239177
+            type: string
+          required: true
+        - name: uploadTo
+          in: query
+          description: Upload target URL
+          schema:
+            example: https://localhost.surfandscan.com:8090/api/v1/demo/upload
+            type: string
+          required: true
+        - name: targetHeader
+          in: query
+          description: This header is send to the target URL. Base64 encoded json string '{"Authorization":"Bearer YourAuthorizationToken"}'
+          schema:
+            example: eyJBdXRob3JpemF0aW9uIjoiQmVhcmVyIFlvdXJBdXRob3JpemF0aW9uVG9rZW4ifQ==
+            type: string
+      summary: Upload a edit task document to given target url with given Header informations.
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EditTaskStatus'
+          description: Ok
+        "417":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SASError'
+          description: Domain Errors
+      tags:
+        - Edit
   /scantask/download/tiff:
     get:
       parameters:
@@ -254,6 +391,7 @@ paths:
           schema:
             example: task1639476547456989.9873687326531
             type: string
+          required: true
         - name: filePattern
           in: query
           description: Delivery filename the extension pdf is attached automatically
@@ -437,6 +575,15 @@ components:
         success:
           example: true
           type: boolean
+      type: object
+    EditTaskStatus:
+      properties:
+        taskId:
+          example: 0815a
+          type: string
+        lastChanged:
+          example: 1641847061531
+          type: number
       type: object
     ScanTask:
       properties:

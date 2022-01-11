@@ -375,6 +375,13 @@ const sas = {
   getDemoUploadURL () {
     return this.getFullURL('/demo/upload')
   },
+  getDemoDownloadURL () {
+    return this.getFullURL('/demo/download')
+  },
+  getDemoEditableDownloadURL () {
+    return this.getFullURL('/demo/downloadEditable')
+  },
+
   /**
    *
    * @param parameter
@@ -414,6 +421,41 @@ const sas = {
           fnError(error)
         }
       })
+  },
+  downEditAndUpFile (parameter, fnSuccess, fnError) {
+    const cmp = this
+    const reqHeader = this.getHeader()
+    let params = {
+      time: new Date().getTime(),
+      token: cmp.token
+    }
+    if (parameter) {
+      params = { ...params, ...parameter }
+    }
+    if (parameter.headerDownload) {
+      params.headerDownload = btoa(JSON.stringify(parameter.headerDownload))
+    }
+    if (parameter.headersUpload) {
+      params.headersUpload = btoa(JSON.stringify(parameter.headersUpload))
+    }
+    cmp.showIdle(true)
+    axios({
+      method: 'get',
+      params: params,
+      headers: reqHeader,
+      url: cmp.getFullURL('/edittask/start'),
+      responseType: 'json'
+    })
+      .then(function (response) {
+        if (fnSuccess) {
+          fnSuccess(response.data)
+        }
+      }).catch(error => {
+      cmp.showIdle(false)
+      if (fnError) {
+        fnError(error)
+      }
+    })
   },
   /**
    * Returns the status informations for the given task

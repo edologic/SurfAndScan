@@ -105,6 +105,34 @@
 <button onclick="uploadTask()">Try: Upload Task</button>
 
 
+
+<h2>Edit File and Upload when needed</h2>
+<pre  class="language-json">
+<code class="language-javascript">
+      var headersDownload = {
+        'Authorization': 'Bearer YourAuthorizationToken'
+      }
+      var headersUpload = {
+        'Authorization': 'Bearer YourAuthorizationToken'
+      }
+      var parameter = {
+        headerDownload: headersDownload,
+        headersUpload: headersUpload,
+        downloadFrom: sas.getDemoEditableDownloadURL(),
+        uploadTo: sas.getDemoUploadURL()
+      }
+      sas.downEditAndUpFile(parameter, function (data) {
+        showResult(targetName, true, JSON.stringify(data, null, 2))
+      }, function (err) {
+        showResult(targetName, false, err)
+      })
+</code>
+    <code class="language-json" id="result06">
+    </code>
+</pre>
+<button onclick="editFile()">Try: Upload Task</button>
+
+
 <script src="./dist/sas.js"></script>
 <script type="application/javascript">
 
@@ -134,6 +162,29 @@
       }, function (err) {
         showResult(targetName, false, err)
       })
+    }
+
+    function editFile() {
+      const targetName = 'result06'
+      const cmp = this
+      var headersDownload = {
+        'Authorization': 'Bearer YourAuthorizationToken'
+      }
+      var headersUpload = {
+        'Authorization': 'Bearer YourAuthorizationToken'
+      }
+      var parameter = {
+        headerDownload: headersDownload,
+        headersUpload: headersUpload,
+        downloadFrom: sas.getDemoEditableDownloadURL(),
+        uploadTo: sas.getDemoUploadURL()
+      }
+      sas.downEditAndUpFile(parameter, function (data) {
+        showResult(targetName, true, JSON.stringify(data, null, 2))
+      }, function (err) {
+        showResult(targetName, false, err)
+      })
+
     }
     function uploadTask() {
       const targetName = 'result05'
