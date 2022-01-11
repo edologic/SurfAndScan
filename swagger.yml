@@ -460,8 +460,12 @@ paths:
           schema:
             example: Dell_C2665dnf
             type: string
-
-
+        - name: targetHeader
+          in: query
+          description: This header is send to the target URL. Base64 encoded json string '{"Authorization":"Bearer YourAuthorizationToken"}'
+          schema:
+            example: eyJBdXRob3JpemF0aW9uIjoiQmVhcmVyIFlvdXJBdXRob3JpemF0aW9uVG9rZW4ifQ==
+            type: string
       responses:
         "200":
           content:
@@ -530,9 +534,9 @@ components:
           type: array
       type: array
     DeviceArray:
-        items:
-          $ref: '#/components/schemas/Device'
-        type: array
+      items:
+        $ref: '#/components/schemas/Device'
+      type: array
     Printer:
       example:
         name: Name of printer
