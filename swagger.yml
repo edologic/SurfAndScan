@@ -134,7 +134,7 @@ paths:
           in: query
           description: Upload target URL
           schema:
-            example: https://localhost.surfandscan.com:8090/api/v1/demo/upload
+            example: https://localhost.surfandscan.com:8000/api/v1/demo/upload
             type: string
           required: true
         - name: targetHeader
@@ -271,11 +271,17 @@ paths:
             example: myTestFile.txt
             type: string
           required: true
+        - name: editors
+          in: query
+          description: (Optional) A list of application name that should try to open like (notepad.exe,... ) Separator is ","
+          schema:
+            example:
+            type: string
         - name: downloadFrom
           in: query
           description: Download URL
           schema:
-            example: https://localhost.surfandscan.com:8090/api/v1/demo/downloadEditable
+            example: https://localhost.surfandscan.com:8000/api/v1/demo/downloadEditable?type=docx
             type: string
           required: true
         - name: downloadHeader
@@ -294,7 +300,7 @@ paths:
           in: query
           description: (required when uploadMode is autoupload) Upload target URL
           schema:
-            example: https://localhost.surfandscan.com:8090/api/v1/demo/upload
+            example: https://localhost.surfandscan.com:8000/api/v1/demo/upload
             type: string
         - name: uploadHeader
           in: query
@@ -359,7 +365,7 @@ paths:
           in: query
           description: Upload target URL
           schema:
-            example: https://localhost.surfandscan.com:8090/api/v1/demo/upload
+            example: https://localhost.surfandscan.com:8000/api/v1/demo/upload
             type: string
           required: true
         - name: targetHeader
@@ -454,7 +460,7 @@ paths:
           in: query
           description: URL of the source of the file
           schema:
-            example: https://localhost.surfandscan.com:8090/api/v1/demo/download
+            example: https://localhost.surfandscan.com:8000/api/v1/demo/download
             type: string
         - name: printerId
           in: query
