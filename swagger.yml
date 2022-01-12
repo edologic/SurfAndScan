@@ -268,7 +268,7 @@ paths:
           in: query
           description: Optional a fileName
           schema:
-            example: myTestFile.txt
+            example: myTestFile.docx
             type: string
           required: true
         - name: editors
