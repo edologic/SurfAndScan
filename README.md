@@ -214,7 +214,7 @@ The original author of ScanAndSurf is [mebel MatthiasEbel](https://github.com/me
 
   [MIT](LICENSE)
 
-[windows-download-url]: https://www.edologic.de/demo/sas/SurfAndScanInstallerV2_01.zip
+[windows-download-url]: https://surfandscan.de/download/SurfAndScanInstallerV2_01.zip
 [npm-image]: https://img.shields.io/npm/v/surfandscan.svg
 [npm-url]: https://www.npmjs.com/package/surfandscan
 [downloads-image]: https://img.shields.io/npm/dm/surfandscan.svg
