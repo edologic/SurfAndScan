@@ -15,12 +15,12 @@ Overview
   The Framework handles the API from the surfAndScan client driver.
   
 ### Simple test
-Simplest way to test SurfAndScan is to download and install the [SurfAndScan driver](https://www.edologic.de/demo/sas/SurfAndScanInstallerV2_01.zip) and open the swagger documentation here. 
+Simplest way to test SurfAndScan is to download and install the [SurfAndScan driver][windows-download-url] and open the swagger documentation here. 
   [Try swagger documentation](https://edologic.github.io/SurfAndScan/swagger.html).
 
 ### Install SurfAndScanClient (For Windows or MacOS)
 
- On Windows you need to install the [windows setup](https://www.edologic.de/demo/sas/SurfAndScanInstallerV2_00.zip).
+ On Windows you need to install the [windows setup][windows-download-url].
  Extract the zip and double click the installer file.
  
  On MacOs you need to install the dmg setup. Not available yet. Try again later.
@@ -196,7 +196,7 @@ for more information or use the [demo-site](https://www.edologic.de/demo/sas/#/F
 
   The quickest way to get started with SurfAndScan is to open the website [`FrameworkTest`](https://www.edologic.de/demo/sas/#/FrameworkTest).
 
-  Install the executable. [SurfAndScanInstaller.exe](https://www.edologic.de/demo/sas/SurfAndScanInstallerV2_00.zip)
+  Install the executable. [SurfAndScanInstaller.exe][windows-download-url]
 
 
 ## Philosophy
